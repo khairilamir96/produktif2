@@ -1,0 +1,196 @@
+<div class=" header pb-6">
+  <div class=" container-fluid">
+    <div class=" header-body">
+      <div class=" row align-items-center py-4">
+        <div class=" col-lg-6 col-7">
+          <h6 class=" h2 text-black d-inline-block mb-0">Audit</h6>
+
+          <nav
+            aria-label="breadcrumb"
+            class=" d-none d-md-inline-block ml-md-4"
+          >
+            <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class=" breadcrumb-item">
+                <a href="javascript:void(0)"> <span style="color:black;"><i class="fas fa-align-justify"></i></span> </a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class=" col-lg-6 col-5 text-right">
+          <a class=" btn btn-sm btn-neutral" href="javascript:void(0)"> New </a>
+
+          <a class=" btn btn-sm btn-neutral" href="javascript:void(0)">
+            Filters
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" container-fluid mt--6">
+  <div class=" row">
+    <div class=" col">
+      <div class=" card">
+        <div class=" card-header">
+          <h3 class=" mb-0">Post-Audit Tables</h3>
+        </div>
+        <div class="dataTables_wrapper py-4">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length" id="datatable_length">
+                <label>
+                  Tunjuk
+                  <select
+                    name="datatable_length"
+                    aria-controls="datatable"
+                    class="form-control form-control-sm"
+                    (change)="entriesChange($event)"
+                  >
+                    <option value="5" [selected]="entries == 5">5</option>
+                    <option value="25" [selected]="entries == 25">25</option>
+                    <option value="50" [selected]="entries == 50">50</option>
+                    <option value="-1" [selected]="entries == -1">All</option>
+                  </select>
+                  Rekod
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div id="datatable_filter" class="dataTables_filter">
+                <label>
+                  <input
+                    type="search"
+                    class="form-control form-control-sm"
+                    placeholder="Search records"
+                    aria-controls="datatable"
+                    (keyup)="filterTable($event)"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <ngx-datatable
+            class="bootstrap selection-cell"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="entries != -1 ? entries : undefined"
+            [rows]="temp"
+            (activate)="onActivate($event)"
+          >
+            <ngx-datatable-column name="smes"></ngx-datatable-column>
+            <ngx-datatable-column name="category"></ngx-datatable-column>
+            <ngx-datatable-column name="product"></ngx-datatable-column>
+            <ngx-datatable-column name="country"></ngx-datatable-column>
+            <ngx-datatable-column name="Date Submit" prop="datesubmit">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.datesubmit}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="officer"></ngx-datatable-column>
+			      <ngx-datatable-column name="status"></ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <div>
+                  <a
+                    class="table-action"
+                    tooltip="Edit"
+                    placement="top"
+                    data-target="#modal-default"
+                    data-toggle="modal"
+                    (click)="openDefaultModal(modalDefault)"
+                  >
+                    <i class=" fas fa-user-edit"> </i>
+                  </a>
+                  
+                  <ng-template #modalDefault>
+                    <div class=" modal-header">
+                      <h6 class=" modal-title" id="modal-title-default">
+                        Post-Audit Form
+                      </h6>
+    
+                      <button
+                        aria-label="Close"
+                        class=" close"
+                        data-dismiss="modal"
+                        type="button"
+                        (click)="defaultModal.hide()"
+                      >
+                        <span aria-hidden="true"> × </span>
+                      </button>
+                    </div>
+    
+                    <div class=" modal-body">
+                      <input
+                         class="form-control mb-2"
+                         placeholder="SMEs"
+                         type="text"
+                      />
+                      <select class=" form-control mb-2" id="exampleFormControlSelect3">
+                        <option> Category </option>
+      
+                        <option> Manufacturer </option>
+                        <option> Supplier </option>
+                        <option> Distributor </option>
+                      </select>
+                      <input
+                         class="form-control mb-2"
+                         placeholder="Product"
+                         type="text"
+                      />
+                      <input
+                         class="form-control mb-2"
+                         placeholder="Country"
+                         type="text"
+                      />
+                      <input
+                      class="form-control mb-2"
+                      placeholder=""
+                      type="date"
+                      />
+                      <select class=" form-control mb-2" id="exampleFormControlSelect3">
+                        <option> Officer </option>
+      
+                        <option> Amir </option>
+                        <option> Ali </option>
+                        <option> Abu </option>
+                      </select>
+                      <select class=" form-control mb-2" id="exampleFormControlSelect3">
+                        <option> Status </option>
+      
+                        <option> Assigned </option>
+      
+                        <option> Unassigned </option>
+                      </select>
+                    </div>
+    
+                    <div class=" modal-footer">
+                      <button class=" btn btn-primary" type="button">
+                        Save changes
+                      </button>
+    
+                      <button
+                        class=" btn btn-link ml-auto"
+                        data-dismiss="modal"
+                        type="button"
+                        (click)="defaultModal.hide()"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </ng-template>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
